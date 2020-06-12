@@ -13,7 +13,8 @@ class App extends Component {
     return {title: props.title};
   }
 
-  setTitle(){
+// Even the following function doesn't work as title is held to stay static from getDerivedStateFromProps
+  setTitle = () => {
     this.setState({title: 'Updated title'});
   }
 
