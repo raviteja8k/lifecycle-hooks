@@ -29,3 +29,4 @@ The next phase in the lifecycle is when a component is removed from the DOM, or 
 React has only one built-in method that gets called when a component is unmounted:
     componentWillUnmount()
 
+https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/

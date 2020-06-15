@@ -16,6 +16,7 @@ class App extends Component {
 
 // Even the following function doesn't work as title is held to stay static from getDerivedStateFromProps
   setTitle = () => {
+    //console.log('Clicked');
     this.setState({title: 'Updated title'});
   }
 
@@ -24,7 +25,7 @@ class App extends Component {
     if(this.state.userData){
       users =  
       //this.state.userData;
-    this.state.userData.map((user, i) => <div key={i}>{user.name}  -{user.address.city}</div>) 
+    this.state.userData.map((user, i) => <div key={i}>{user.name} is from {user.address.city} city.</div>) 
     }
      else {
       users = <p>Loading...</p>;
@@ -33,6 +34,7 @@ class App extends Component {
   return (
     <div className="App">
       <h1>{this.state.title}</h1>
+      {/* <button onClick={this.setTitle}>Change title</button> */}
       {users}
     </div>
   );
