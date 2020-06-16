@@ -1,59 +1,63 @@
 import React , { Component } from 'react';
 import './App.css';
 
+
 class App extends Component {
-  constructor (props){
-    super(props);
-    this.state={title: '',
-                userData: ''};
-    this.setTitle = this.setTitle.bind(this)
-  }
+  state = {
+    boxSize: "normal"
+  };
 
-  //This ensures title defined by constructor props is not manipulating actual title defined in index.js file
-  static getDerivedStateFromProps(props, state) {
-    return {title: props.title};
-  }
-
-// Even the following function doesn't work as title is held to stay static from getDerivedStateFromProps
-  setTitle = () => {
-    //console.log('Clicked');
-    this.setState({title: 'Updated title'});
-  }
-
-  render(){
-    let users = null;
-    if(this.state.userData){
-      users =  
-      //this.state.userData;
-    this.state.userData.map((user, i) => <div key={i}>{user.name} is from {user.address.city} city.</div>) 
+  // Defines box sizes with background color
+  boxes = {
+    small: {
+      height: 60,
+      width: 60,
+      backgroundColor: "yellow"
+    },
+    normal: {
+      height: 120,
+      width: 120,
+      backgroundColor: "red"
+    },
+    big: {
+      height: 180,
+      width: 180,
+      backgroundColor: "blue"
     }
-     else {
-      users = <p>Loading...</p>;
-    } 
+  };
 
-  return (
-    <div className="App">
-      <h1>{this.state.title}</h1>
-      {/* <button onClick={this.setTitle}>Change title</button> */}
-      {users}
-    </div>
-  );
+  // Get box DOM reference
+  boxRef = React.createRef();
+
+  handleClick = value => () => this.setState({ boxSize: value });
+
+  getSnapshotBeforeUpdate() {
+    // Let componentDidUpdate know whether to override the box
+    // color or not.
+    return {
+      overrideBoxColor: this.boxRef.current.offsetHeight > 120
+    };
   }
- 
-  // Re-renders the component with data fetched from dummy API
-  componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then((res) => res.json())
-    .then((json) => 
-       setTimeout(() => {
-        this.setState({userData: json})
-        }, 1000)          
-    ) 
 
-        
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // Override the box ref directly
+    if (snapshot.overrideBoxColor) {
+      this.boxRef.current.style.backgroundColor = '#000';
+    }
   }
-    
 
+  render() {
+    return (
+      <>
+        <div>
+          <button onClick={this.handleClick("small")}>Shrink</button>
+          <button onClick={this.handleClick("normal")}>Normal</button>
+          <button onClick={this.handleClick("big")}>Size up</button>
+        </div>
+        <div ref={this.boxRef} style={this.boxes[this.state.boxSize]} />
+      </>
+    );
+  }
 }
 
 export default App;
