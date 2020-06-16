@@ -14,6 +14,14 @@ class App extends Component {
     return {title: props.title};
   }
 
+  // This is to simply return true or false to determine whether the component should update if the state changes
+  // It's default value is true
+  shouldComponentUpdate(nextProps, nextState){
+    return true;
+    // Un Comment below and the component won't be updated
+    // return false;
+  }
+
 // Even the following function doesn't work as title is held to stay static from getDerivedStateFromProps
   setTitle = () => {
     //console.log('Clicked');
