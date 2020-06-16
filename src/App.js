@@ -6,7 +6,7 @@ class App extends Component {
     super(props);
     this.state={title: '',
                 userData: ''};
-    this.setTitle = this.setTitle.bind(this)
+    this.setTitle = this.setTitle.bind(this);    
   }
 
   //This ensures title defined by constructor props is not manipulating actual title defined in index.js file
@@ -16,7 +16,7 @@ class App extends Component {
 
   // This is to simply return true or false to determine whether the component should update if the state changes
   // It's default value is true
-  shouldComponentUpdate(nextProps, nextState){
+  shouldComponentUpdate(nextProps, nextState){    
     return true;
     // Un Comment below and the component won't be updated    
     // return false;
@@ -25,8 +25,13 @@ class App extends Component {
   // This lifecycle isn’t often needed, 
   // but can be useful in cases like manually preserving scroll position during rerenders.
   // The return value for this lifecycle will be passed as the third parameter to componentDidUpdate.
-  getSnapshotBeforeUpdate(getPrevProps, getPrevstate){
+  getSnapshotBeforeUpdate(getPrevProps, getPrevstate){        
+        return this.state.userData.length;
+  }
 
+// componentDidUpdate is mandatory to use if we are using getSnapshotBeforeUpdate
+  componentDidUpdate(getPrevProps, getPrevstate, snapshot){
+    console.log(snapshot);
   }
 
 
@@ -37,7 +42,7 @@ class App extends Component {
   }
 
   render(){
-    let users = null;
+    let users = null;    
     if(this.state.userData){
       users =  
       //this.state.userData;
@@ -45,7 +50,7 @@ class App extends Component {
     }
      else {
       users = <p>Loading...</p>;
-    } 
+    }     
 
   return (
     <div className="App">
@@ -57,7 +62,7 @@ class App extends Component {
   }
  
   // Re-renders the component with data fetched from dummy API
-  componentDidMount() {
+  componentDidMount() {    
     fetch('https://jsonplaceholder.typicode.com/users')
     .then((res) => res.json())
     .then((json) => 
