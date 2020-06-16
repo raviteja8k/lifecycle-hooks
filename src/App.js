@@ -18,9 +18,17 @@ class App extends Component {
   // It's default value is true
   shouldComponentUpdate(nextProps, nextState){
     return true;
-    // Un Comment below and the component won't be updated
+    // Un Comment below and the component won't be updated    
     // return false;
   }
+
+  // This lifecycle isn’t often needed, 
+  // but can be useful in cases like manually preserving scroll position during rerenders.
+  // The return value for this lifecycle will be passed as the third parameter to componentDidUpdate.
+  getSnapshotBeforeUpdate(getPrevProps, getPrevstate){
+
+  }
+
 
 // Even the following function doesn't work as title is held to stay static from getDerivedStateFromProps
   setTitle = () => {
